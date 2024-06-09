@@ -41,13 +41,13 @@ Downloaded the file , checked with file command to ensure it is png (yes it is).
 
 This was so easy? Literally run file command to discover this is a png, next go to windows explorer and change the file extension from txt to png and open it in one photo viewer (or any pic viewer of choice) and voila!!! got the flag.
 
-### MSB 
+### MSB (Could not complete)
 
 Another png , firstly checking with file command and `exiftool` we indeed confirm this to be a png file. Next we check up on the hexdump and check for the file header (signature) and the IHDR , IEND etc chunks , they all seem to be okay. So what might be causing the distortion in the upper part of the image when the lower one seems to be okay?
 
+### File-Types (Could not complete)
 
-
-
+Still trying to figure out this one. I kept on unzipping different file formats till i reached a dead end where it wont unzip anymore an the flag is noweher in the files retreived. So yeah..stuck on this one for now.
 
 
 
