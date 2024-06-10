@@ -41,13 +41,13 @@ Downloaded the file , checked with file command to ensure it is png (yes it is).
 
 This was so easy? Literally run file command to discover this is a png, next go to windows explorer and change the file extension from txt to png and open it in one photo viewer (or any pic viewer of choice) and voila!!! got the flag.
 
-### MSB (Could not complete)
+### MSB
 
-Another png , firstly checking with file command and `exiftool` we indeed confirm this to be a png file. Next we check up on the hexdump and check for the file header (signature) and the IHDR , IEND etc chunks , they all seem to be okay. So what might be causing the distortion in the upper part of the image when the lower one seems to be okay?
+Another png , firstly checking with file command and `exiftool` we indeed confirm this to be a png file. Next we check up on the hexdump and check for the file header (signature) and the IHDR , IEND etc chunks , they all seem to be okay. So what might be causing the distortion in the upper part of the image when the lower one seems to be okay? I thought that perhaps there is some pattern in how the pixels have changed rgb values so i manually started analyzing the rgb values of the left border (white part) with the distorted values above it. I could see that the bits did appear to change but the cahnge was only in the 1st bit of the pxiels. The challenge is also called MSB ,  so i decided to apply MSB techniques on this. I found an online tool called StegOnline that can do MSB on png images to look for hidden strings and files. And yes indeed the image did contain lots of string revealed by the MSB. We simply download the file and do a ctrl+f to search for pico. We got the flag!!.
 
 ### File-Types (Could not complete)
 
-Still trying to figure out this one. I kept on unzipping different file formats till i reached a dead end where it wont unzip anymore an the flag is noweher in the files retreived. So yeah..stuck on this one for now.
+Still trying to figure out this one. I kept on unzipping different file formats till i reached a dead end where it wont unzip anymore an the flag is nowehere in the files retreived. So yeah..stuck on this one for now.
 
 
 
