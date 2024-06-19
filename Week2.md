@@ -296,6 +296,30 @@ We get the required number from this operation.
 
 ### Starter 6
 
+This article introduces to the concept of signatures and how we can verify that the message we sent is intact and has not been tampered with. 
+
+```
+Consider my message is M
+My public key is P
+My private key is p
+My friend public key is Q
+My friend private key is q
+
+Here's a rough flowchart of what is happening
+
+```
+
+![Screenshot 2024-06-19 203436](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/0073d579-b867-43c1-9e23-56e6cb5a29f1)
+
+
+To complete the challenge , we need to :
+
+1. Hash the message
+2. Encrypt it using our private key
+
+
+
+
 
 
 
