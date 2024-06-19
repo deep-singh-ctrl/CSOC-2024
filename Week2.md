@@ -38,7 +38,8 @@ We download and load this file and run it from the terminal.
 
 Here we need to connect to the server given in the descripton on the specified port and send a JSON object with some specific attributes. Fistly we install the pwntools package by using `pip install pwntools` , next we download the template and make the required changes. 
 
-![Making changes in pwntools.py](https://github.com/deep-singh-ctrl/SDE_Roadmap_2024/assets/172205598/a3dc9a44-7e14-4d6d-9030-d144f1173853
+![Screenshot 2024-06-17 195524](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/89fffa3f-db7f-4dcb-a287-81e3d775aae1)
+
 
 Just change the clothes parameter to flag as per the instructions and run. This gives us the flag which we can submit.
 
