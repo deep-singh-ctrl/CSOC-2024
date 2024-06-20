@@ -404,8 +404,17 @@ for i in range(len(output)-2, -1, -2):
 print(flag)
 ```
 
+I was pretty insistent this is correct but again and again i was getting wrong answers. So I tested the source code with my own message. 
+
+![Screenshot 2024-06-20 122129](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/16d1b179-b3e2-4e3c-bf55-d317e19ea913)
+
+As you can see , the odd bytes (A pair of hex digits is a byte) are the same for the ciphertext and the plaintext(in hex obviously) but the even bytes are the xor of the two bytes sandwiched between them
+By going ahead with this pattern we can modify the previous script to decrypt the message. 
 
 
+and Voila!! we get the flag when we run this....
+
+![Web_Photo_Editor](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/a3a266dd-efd5-4c14-a50a-2f7afd47471c)
 
 
 
@@ -421,7 +430,7 @@ Its pretty obvious that this is just encoding in binary , hex , base64 and octal
 ![Screenshot 2024-06-20 101302](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/f1c64556-b047-486a-ba2e-3249ae98cfd2)
 
 
-On running it we get the flag as output. (Though its a bit messy)
+On running it we get the flag as output. (Though its a bit messy , didn't post it to avoid spoliers)
 
 
 
