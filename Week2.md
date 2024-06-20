@@ -411,6 +411,9 @@ I was pretty insistent this is correct but again and again i was getting wrong a
 As you can see , the odd bytes (A pair of hex digits is a byte) are the same for the ciphertext and the plaintext(in hex obviously) but the even bytes are the xor of the two bytes sandwiched between them
 By going ahead with this pattern we can modify the previous script to decrypt the message. 
 
+![Screenshot 2024-06-20 122939](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/a6c725b7-ceaf-424b-8577-01c9b36f6d3d)
+
+
 
 and Voila!! we get the flag when we run this....
 
