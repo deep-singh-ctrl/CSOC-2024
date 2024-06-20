@@ -363,6 +363,51 @@ Okay so that was worthless. let us focus our efforts on decrypting the output.tx
 
 Andddd we got the flag from this. Onto the next.....
 
+## Last year challenges 
+
+### Challenge 1
+
+We see two files calld source.enc and output.txt
+
+![Screenshot 2024-06-20 090156](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/67c61dbd-d2ce-4659-88c0-9ea8474e61aa)
+
+Firstly checkout the contents of the source.enc file ,we see that it has some (probably base 64 encoded text)
+
+![Screenshot 2024-06-20 090143](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/fe660f67-b2a7-4c96-86da-e37b073e629d)
+
+Lets decrypt this in the terminal itself
+
+![Screenshot 2024-06-20 090131](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/f15f4301-7c86-4e1a-b174-14e68bb22d28)
+
+So here is what this source code does:
+
+1. takes the flag as input
+2. converts each character into 2 digit hex equivalent
+3. Takes 2 hex numbers starting from 1st position , xor them and append to the 'e' string
+4. outputs the string e into output.txt.
+
+So we need to work backwards to decrypt this :
+
+
+
+
+
+### Challenge 2 
+
+We are given a file called encoding.txt we open it to find some letters :
+
+![Screenshot 2024-06-20 101418](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/1c3fd659-5f50-41ee-a687-fd303caea357)
+
+Its pretty obvious that this is just encoding in binary , hex , base64 and octal. We can write seperate functions to decrypt these and then pass them seperately to get the final output. Here is the script :
+
+![Screenshot 2024-06-20 101302](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/f1c64556-b047-486a-ba2e-3249ae98cfd2)
+
+
+On running it we get the flag as output. (Though its a bit messy)
+
+
+
+
 
 
 
