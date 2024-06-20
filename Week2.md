@@ -209,7 +209,9 @@ This intoduces us to the concept of multiplicative inverse (In the context of mo
 It's easy to figure out the answer for this ,  we only need to iterate over from 1 and check which element is the inverse. Onto the next
 
 
-## Symmetric Ciphers
+# Symmetric Ciphers
+
+## How AES Works
 
 ### Keyed Permuations
 
@@ -236,7 +238,9 @@ To proceed we need to write a function matrix2bytes which takes a square matrix 
 It's possible there could be other solutions but this one I found is easier to understand and is a lot more intuitive.
 
 
-## RSA
+# RSA
+
+## Starter
 
 ### Starter 1
 
@@ -334,6 +338,7 @@ As you can see , I got an error the first time when i didn't notice that I was t
 
 (I am sorry for not posting the script which gave an error , I forgot to take a SS). Now it works!! Just copy whatever output you get and let us proceed to the next question
 
+## Public Exponent
 
 ### Salty
 
@@ -363,9 +368,9 @@ Okay so that was worthless. let us focus our efforts on decrypting the output.tx
 
 Andddd we got the flag from this. Onto the next.....
 
-## Last year challenges 
+# Last year challenges 
 
-### Challenge 1
+## Challenge 1
 
 We see two files calld source.enc and output.txt
 
@@ -422,7 +427,7 @@ and Voila!! we get the flag when we run this....
 
 
 
-### Challenge 2 
+## Challenge 2 
 
 We are given a file called encoding.txt we open it to find some letters :
 
