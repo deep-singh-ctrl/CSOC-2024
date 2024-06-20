@@ -317,6 +317,59 @@ To complete the challenge , we need to :
 1. Hash the message
 2. Encrypt it using our private key
 
+Here's how we will do it , first we can hash the string message using sha256 function in the hashlib library. This will give us a hex-encoded string as output. This we can convert to the actual hex string using the hexdigest() function. Next we can convert this to bytes object and pass it to our bytes.fromhex() function. Finally this bytes type object is passed to bytes_to_long and then encrypted using our ptivate key.
+
+The private key is already there in the downloads for this question. Let's open it
+
+![Screenshot 2024-06-20 074653](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/abb3f20a-30f9-4e78-a5eb-1344d44e08f4)
+
+We have the N and d , Perfect! Now let us proceed with the script. All we need to do is run it and...
+
+![Screenshot 2024-06-20 080640](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/c1f6acb5-4e21-4d9f-ad63-72e08e7ce668)
+
+
+As you can see , I got an error the first time when i didn't notice that I was trying to do modular exponentiation on something which is not even a number(sigh). here's the final script :  
+
+![Screenshot 2024-06-20 081727](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/a2fa0104-747f-4558-a2fc-7df5cc3c436f)
+
+(I am sorry for not posting the script which gave an error , I forgot to take a SS). Now it works!! Just copy whatever output you get and let us proceed to the next question
+
+
+### Salty
+
+In the downloads for this question we are given two files called output.txt and salty.py.Let us download both of them and scan the contents one by one : 
+
+![Screenshot 2024-06-20 083539](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/4803269d-42bc-4f76-b3bb-8b01d0829409)
+*Contents of Output.txt*
+
+![Screenshot 2024-06-20 083558](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/dbbb9ac0-95dc-46f6-aba6-6906121fa289)
+*Contents of salty.py*
+
+```
+Explaination
+The salty.py function uses the getprime(N) function to generate two random N bit prime numbers. Phi represents the euler totient of these two primes.
+Next is to set the exponenet to 1 and then encrypt the plaintext(pt) into a long integer ciphertext (ct). The ct , N and e are then printed
+```
+We can confirm this by running the salty.py program
+![Screenshot 2024-06-20 084055](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/72250f68-f04a-4cc3-8589-c1c88a0455d7)
+
+Initally i thought of modifying the salty.py to print the plaintext. Here is the output i got :
+
+![Screenshot 2024-06-20 084119](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/f4d2af4c-7ca9-4d0d-a932-af32ec547490)
+
+Okay so that was worthless. let us focus our efforts on decrypting the output.txt stuff. Here is the script to do so :
+
+![Screenshot 2024-06-20 084141](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/fe1573c3-ec67-43fd-8c10-45637ebf51e3)
+
+Andddd we got the flag from this. Onto the next.....
+
+
+
+
+
+
+
+
 
 
 
