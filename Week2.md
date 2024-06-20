@@ -386,7 +386,23 @@ So here is what this source code does which i thought originally.
 3. Takes 2 hex numbers starting from 1st position , xor them and append to the 'e' string
 4. outputs the string e into output.txt.
 
-So i wrote this code to decrypt it : 
+So i wrote this code to decrypt it 
+
+```
+output = "43104f0c32017b48340179266203350636025f6b6e0a5f2730423f42"
+flag = ""
+last_known = "}"
+
+# Start from the end and move backwards by 2
+for i in range(len(output)-2, -1, -2):
+    print(last_known, end="")
+    hex_pair = output[i:i+2]  # Extract two characters at a time
+    decrypted_ele = int(hex_pair, 16) ^ ord(last_known)
+    last_known = chr(decrypted_ele)
+    flag = last_known + flag  # Prepend to build the flag in reverse order
+
+print(flag)
+```
 
 
 
