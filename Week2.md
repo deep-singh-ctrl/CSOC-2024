@@ -379,14 +379,16 @@ Lets decrypt this in the terminal itself
 
 ![Screenshot 2024-06-20 090131](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/f15f4301-7c86-4e1a-b174-14e68bb22d28)
 
-So here is what this source code does:
+So here is what this source code does which i thought originally.
 
 1. takes the flag as input
 2. converts each character into 2 digit hex equivalent
 3. Takes 2 hex numbers starting from 1st position , xor them and append to the 'e' string
 4. outputs the string e into output.txt.
 
-So we need to work backwards to decrypt this :
+So i wrote this code to decrypt it : 
+
+
 
 
 
