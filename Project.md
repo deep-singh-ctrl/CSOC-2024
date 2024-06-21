@@ -27,3 +27,44 @@ And this is the final result after editing the file. This was a really easy one 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Learnings from the Project
+### Game1
+1. Vim commands , vimdiff
+2. XML format
+
+
+
