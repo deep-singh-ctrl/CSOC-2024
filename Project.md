@@ -98,5 +98,10 @@ Yess!!. The conde injection was successful. Now we will try to do it by modifyin
 1. Vim commands , vimdiff
 2. XML format
 
+## Game2
+
+1. Not much as of now.
+2. 
+
 
 
