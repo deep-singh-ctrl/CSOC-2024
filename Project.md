@@ -54,6 +54,40 @@ Yess!!. The conde injection was successful. Now we will try to do it by modifyin
 
 ### Method 2 : Comparing and editing save files.
 
+This time we will compare and try to figure out at which byte the money value is stored in the save file. Before we proceed with that , [her is a video]() on the details of little endian and big endian way to store data in the RAM. Now we can start.. I have already made 4 save files from the game with minimal changes. Starting from a money value of 450 at save 1 , we decrease in arithmetic progression to 360 at save 4 , subtracting 30 each time. 
+![Screenshot 2024-06-22 205335](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/c70ab8d1-fd0e-4fb8-8dc0-8acf294a3916)
+
+Let me show you the complete contents of each folder in linux...
+
+![Screenshot 2024-06-22 210528](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/2363bd12-fc38-4a09-a5c0-52486d1b8436)
+
+The game has 2 options , either you can save manually or the gameautosaves. We will be working with 0001 for each because I assume that is the manual save. Let us start with vimdiff. This is what we get
+
+![Screenshot 2024-06-23 123037](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/1820236b-f17b-44e3-81f8-8ec99f784ae9)
+
+Thankfully there is not a lot of changes reflected here. The save games are all binary formats and we are basically comparing thier hexdumps. Still , to make our lives easier , we will use the `comm` command preceeded by sorting thhese hexdumps to get only the lines where the changes have been made (aka , we need lines unique to file 1 and file 2) First we will sort all the files 
+
+```
+sort sav1 > ssav1
+sort sav2 > ssav2
+sort sav3 > ssav3
+sort sav4 > ssav4
+```
+
+Next we will use the comm command to record all the differences , so we can use `comm -3 ssav1 ssav2 > diff_1_2` to get differences stored in a file called diff_1_2 (differences betwwen sav1 and sav2)
+
+Next we will concatentenate all these results. Here's a bash script to do this :
+
+![Screenshot 2024-06-23 130406](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/c51511dc-18eb-4a2e-a8a0-5dbb1a04cac8)
+
+Now we will take this all_diffs.txt , load up our 
+
+
+
+
+
+
+
 
 
 
