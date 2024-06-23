@@ -1,6 +1,6 @@
 # Editing a Save file
 
-This Project will most likely comprise of multiple game entries as I have trouble deciding which one to proceed with. For now I am going to go with Games released on Windows only. 
+This Project will most likely comprise of multiple game entries as I have trouble deciding which one to proceed with. For now I am going to go with Games released on Windows as it is easier to locate savefiles for such games.
 
 ## Game 1 : Lethis : Path to progress
 
