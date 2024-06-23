@@ -80,7 +80,25 @@ Next we will concatentenate all these results. Here's a bash script to do this :
 
 ![Screenshot 2024-06-23 130406](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/c51511dc-18eb-4a2e-a8a0-5dbb1a04cac8)
 
-Now we will take this all_diffs.txt , load up our 
+So why did i do all this? Why did i store all these different lines in a seperate file? For one , it makes it easier to browse through the changes (without focussing on the lines which are the same for the files) , secondly , i did this to eliminate false positives. That is , suppose i search for a value of 450 on sav1 and found the value at some address and at some offset. I can then run through the file and see if this address changes throughout the other files , if it does , then that is a promising address otherwise we can ignore it. Unfortunately searching the files for the values does not yield anything useful(the search results are all at different addresses)
+
+![Screenshot 2024-06-23 140810](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/80db1bbb-6e1c-4901-b3f2-dc8962fd7b46)
+
+Save1
+
+![Screenshot 2024-06-23 140817](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/22824a0f-46e0-4197-b074-6a305e9e3e93)
+
+Save2
+
+![Screenshot 2024-06-23 140827](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/03c72ba3-7702-474b-adb0-2cb9bc90e690)
+
+Save3
+
+![Screenshot 2024-06-23 140834](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/ab37d225-665a-4aec-9ed3-df1d28d50d8b)
+
+Save4
+
+Please ignore the value in searchbox (it automatically swithces to the latest search but the address remains same as the last search) Now you can see that i am running a pretty big number of checkboxes (8bit , 16bit , float ,double , arrays , little and big endian) but i dont find a common memory address which i can pinpoint as the location where money is stored. 
 
 
 
