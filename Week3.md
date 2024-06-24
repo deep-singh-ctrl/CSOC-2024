@@ -26,4 +26,18 @@ Why did I enter this? if you look at the query format above , the query in sql n
 SELECT * FROM users WHERE username = ' ' OR 1=1
 ```
 
-The where filter in the query is broken , this is true for all rows and should return us all records on the system. Let us run this and capture the respoinse using burp suite.
+The where filter in the query is broken , this is true for all rows and should return us all records on the system. But.......it didnt return us anything. It is at this point i realised i need to study SQLi in more detail so i head over to the portswigger.net to do their labs on this..
+
+Okay now that we have some expereince , we can proceed forward. Let us look at the query one more time :
+
+`SELECT * FROM users WHERE username = 'username' AND password = 'password'`
+
+We can comment out the password check by the `--` text. Next we can try to login as admin. So our entries become:
+
+```
+Username :  admin' --
+Password :  uasdkjnjcnqien( *can be anything)
+```
+
+And bingo , first round complete :
+
