@@ -93,6 +93,20 @@ Looks like we can use the same payload as we used before , the filter gives me a
 
 Finally we get the flag on the filter.php webpage. 
 
+## JaWT Scrathpad
+
+This challenge requires us to login as admin to a site. Unfortunately when we try do so , we get an error. 
+
+![Screenshot 2024-06-26 160928](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/a904b691-cc33-4a10-93fb-ec74cc35ea6d)
+
+We see two hints on the page telling us about checking the cookies and to read up on JWT. Also the URL has hyperlinks to JWT.io and a git repo to John the ripper.
+
+In Burpsuite, we see that we can intercept the cookie and change the value of JWT to the one of admin. However the problem is, We don't know the secret key for which the signature is created. Fortunately , we can bruteforce this key using John the ripper.  
+
+![Screenshot 2024-06-26 160739](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/bae252dd-53f5-4523-b242-1f840af3b10f)
+
+[This Blog](https://blog.pentesteracademy.com/hacking-jwt-tokens-bruteforcing-weak-signing-key-johntheripper-89f0c7e6a87) is useful for knowing how to use John the ripper. The installation instructions are there in the hyperlink John on the login page. 
+
 
 
 
