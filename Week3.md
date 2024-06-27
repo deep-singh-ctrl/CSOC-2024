@@ -93,6 +93,25 @@ Looks like we can use the same payload as we used before , the filter gives me a
 
 Finally we get the flag on the filter.php webpage. 
 
+## Web gauntlet 2
+
+This challenge is very similar to the last challenge. All that has changed is the filter.php , some more filters have been added this time. Let us take a look at the filters:
+![Screenshot 2024-06-27 192353](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/49308e5a-18e8-4ba9-92a8-6c6c718e065f)
+So for the username , since `|` is not filtered , we can use it and our username payload will be the same as before (concatenating adm and in) However this time we can see that the SQL query is diffrent from before.
+
+`SELECT username, password FROM users WHERE username='hello' AND password='asda'`
+
+We need to figure out some way to drop the remaining query after username or make the password paramter return true. Unfortuantely if you look at the filters above , most of our relational and logical operators have been banned. So let's use the list of all Logicaal Operators in SQLite and think of ways to bypass this. [Here is the list](https://www.javatpoint.com/sqlite-operators) , let's try those from which we can make possible queries (Obviously the filtered keyowrds have been ignored). Firstly i tried this query 
+
+## Web gauntlet 3
+
+We can use the same payloads as web gauntlet 2.
+
+
+
+
+
+
 ## JaWT Scrathpad
 
 This challenge requires us to login as admin to a site. Unfortunately when we try do so , we get an error. 
