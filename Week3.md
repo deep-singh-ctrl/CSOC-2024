@@ -147,6 +147,30 @@ Password : ' BE 1=1;
 
 And we are in!!. Yay!!.
 
+## Secrets
+
+This website is supposed to have some hidden webpages. However we can't really find any hidden links anywhere so let us try to read the html for the pages. Upon doing so we , notice that the header tag has the file location of the assets insidde the `secret` directory.
+
+![Screenshot 2024-06-28 135030](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/b5be03c7-eb87-4a92-8c9c-a350607969ae)
+
+That looks suspicious. If we try to access the folder by typing  `.../secret/` into the URL , we are led to another Webpage. Let us inspect the element here , 
+
+![Screenshot 2024-06-28 135130](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/9242c7b2-49dc-44fd-8a58-3102116a0eed)
+
+As usual , navigate to the `hidden` subdirectory. 
+
+![Screenshot 2024-06-28 135227](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/d2a75778-5979-4270-9b2f-1adb3d653b7f)
+
+Another webpage and another redrection to `superhidden` subdirectory , let us try to navigate there.
+We see that the webpage displays the message that it has the flag , however we can't really see it. But we can look at the HTML for this webpage and see if there is the flag here.
+
+And we got the flag. Onto the next..
+
+
+
+
+
+
 
 
 
