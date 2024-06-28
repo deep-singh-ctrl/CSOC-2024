@@ -197,6 +197,19 @@ In Burpsuite, we see that we can intercept the cookie and change the value of JW
 [This Blog](https://blog.pentesteracademy.com/hacking-jwt-tokens-bruteforcing-weak-signing-key-johntheripper-89f0c7e6a87) is useful for knowing how to use John the ripper. The installation instructions are there in the hyperlink John on the login page. 
 
 
+## Intro to Burp
+
+This challenge more or less requires us to play around with the requests. First input anything in the login page.
+![Screenshot 2024-06-28 150503](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/238ddef3-6b59-475f-bc66-d819669c1e38)
+Now get to the 2fa page. Here no matter what you type , you cant access the flag page. Lets look at the request in burp:
+
+![Screenshot 2024-06-28 150509](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/929c07ad-8097-4790-b286-0d9045f929ce)
+
+I was playing around with the requests such as long input lengths for otp , changing the priority parameter etc and i ended up deleting the otp parameter. This gave the flag when sent.
+
+
+
+
 
 
 
