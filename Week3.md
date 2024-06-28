@@ -108,6 +108,52 @@ We need to figure out some way to drop the remaining query after username or mak
 We can use the same payloads as web gauntlet 2.
 
 
+## Irish Name Repo 1
+
+This challenge series is very similar to the one which we did above. We can infact , recycle a lot of our payloads in from previous exercises. First we navigate to the login page and supply any username and password. Try to login.
+
+![Screenshot 2024-06-28 123150](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/dc17440c-c8fb-456a-91f4-0499a96ee220)
+
+Just a simple HTML error page. Next try to login using the payload `'` in username. We are doing this to check for possible SQLi injection vulnerability. 
+
+![Screenshot 2024-06-28 122959](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/749e26ea-e85f-4439-8fee-459da5432808)
+
+An error of http 5050 indicates something may have gone wrong on the backend (Aka the SQL query was messed up). Let's try to use our most basic payload here:
+
+![Screenshot 2024-06-28 122835](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/aabcb3ec-0d09-4f80-8f58-1f209d10ce2b)
+
+And we got in , onto the next..
+
+## Irish Name Repo 2
+
+I used the same payload this time and we got access. Onto the last one
+
+## Irish Name Repo 3
+
+This time we only are prompted for a password. We need to enter the correct password or figure out a workaround. Entering any random password is giving a Login error and entering a `'` gives a 5050 error. This means that the system is still vulnerable to SQLi attack. The hint says that the password is encrypted , maybe we could try to figure out something from the http packet inspection. Upon Inspection we find that there is a debug parameter set to 0.
+
+![Screenshot 2024-06-28 124558](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/28d77a08-8b43-461a-8e5b-882cda3b7aba)
+
+Look at the far right. Change it to 2 (maybe some other non zero value could work as well) and then send the request back. 
+
+
+![Screenshot 2024-06-28 124614](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/8ebc6695-96b9-4c54-ac39-8745caaadd5d)
+
+We can now see the SQL query being made. It seems that our password 'zxzz' is being changed to `mkmm`. This is ROT13 cipher. So all we need to do is to get a payload say `' OR 1=1;` , encrypt it using ROT13 and then send the request back (Since ROT13 can be decrypted by applying the ROT13 on the message again). Here is the final payload
+
+```
+Password : ' BE 1=1;
+```
+
+And we are in!!. Yay!!.
+
+
+
+
+
+
+
+
 
 
 
