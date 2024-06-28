@@ -212,6 +212,86 @@ Lets look at the request in burp:
 
 I was playing around with the requests such as long input lengths for otp , changing the priority parameter etc and i ended up deleting the otp parameter. This gave the flag when sent.
 
+## Who are you
+
+The webpage wouldn't let us in and the attachd doc is a RFC manual. We see the prompt that only PicoBrowser users are allowed on the site.
+
+![Screenshot 2024-06-28 203717](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/c241e363-9542-47c4-8ebb-0ad543a26ca8)
+
+Upon Inspecting the page ource , there doesn't seem to be anything weird going on here.
+
+```
+l>
+<html lang="en">
+
+<head>
+    <title>Who are you?</title>
+
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="https://getbootstrap.com/docs/3.3/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+</head>
+
+<body>
+
+    <div class="container">
+      <div class="jumbotron">
+        <p class="lead"></p>
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12">
+				<h3 style="color:red">Only people who use the official PicoBrowser are allowed on this site!</h3>
+			</div>
+		</div>
+		<br/>
+		
+			<img src="/static/who_r_u.gif"></img>
+		
+	</div>
+    <footer class="footer">
+        <p>&copy; PicoCTF</p>
+    </footer>
+
+</div>
+<script>
+$(document).ready(function(){
+    $(".close").click(function(){
+        $("myAlert").alert("close");
+    });
+});
+</script>
+</body>
+
+</html>
+```
+Next we load up burpsuite and inspect the http request. We notice an intereesting header.
+
+![Screenshot 2024-06-28 203933](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/631c64dd-aeba-464e-bea2-989bfeda7208)
+
+User-Agent set to Mozilla. Let us try to change it PicoBrowser. Now the website says that the website only worked in 2018. Refer to the attached manual , there is a header under the general header that we can use and set the date to any date in 2018.
+
+![Screenshot 2024-06-28 204123](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/af80820b-26f6-4891-9bd2-30dcbc8f9b98)
+
+Next we see that the site does not allow users who can be tracked. I searched up the manual but could not find any header. Fortunately a quick google search reveals the DNT header. So we add this to the request.
+
+![Screenshot 2024-06-28 204239](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/cc12a280-e960-4318-9e32-a375e391d04c)
+
+The website says that only uers from Sweden are allowed. This means we need to spoof our IP address somehow. Fortunately there is a header called X-forwarded-for we can use.
+
+![Screenshot 2024-06-28 204405](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/c7cb58fe-d59e-4cd9-876f-94d9d8ce3082)
+
+Next change up the language in the accept language header to ge the flag.
+
+## Client-Side-Again
+
+As per the hint , let us inspect the JS page source and specifically the JS for the submit button. It seems to bea regular JS but it has been obfuscated and made difficult to reverse read and understand. The var names are hexes , the string names are referenced by the array indices. 
+
 
 
 
