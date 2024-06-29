@@ -197,6 +197,21 @@ In Burpsuite, we see that we can intercept the cookie and change the value of JW
 [This Blog](https://blog.pentesteracademy.com/hacking-jwt-tokens-bruteforcing-weak-signing-key-johntheripper-89f0c7e6a87) is useful for knowing how to use John the ripper. The installation instructions are there in the hyperlink John on the login page. 
 
 
+So now all we need to do is to run john the ripper with the Original JWT token as paramter 1 and the wordlist (we will obviously go wit rockyou.txt) as paramter 2. Here is what we get:
+
+![Screenshot 2024-06-29 111626](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/d36f7767-3c86-4dd7-95ab-e3ab8ecad020)
+
+
+We can use this to create a forged token. Just login as any user then go to burp and capture the refresh request. change the jwt token to the one with admin as payload and the key as `ilovepico`. Forward this request to get the flag.
+
+EXTRA : I tried to solve this problem with a python script first. 
+
+![Screenshot 2024-06-29 115120](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/2202babb-e904-43c6-adab-d5b9d3d08e06)
+
+
+However during debugging , i found that the jwt library changes ther order of claims in header. This leads to a diffrent hash being generated owing to the fact that a different base64 text was generated for the header. You could try some jwt crack code on git or modify this one to work as per your needs.
+
+
 ## Intro to Burp
 
 This challenge more or less requires us to play around with the requests. First input anything in the login page.
