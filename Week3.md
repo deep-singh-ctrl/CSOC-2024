@@ -382,7 +382,71 @@ These are the Obfuscation Techniques used:
 
 To overcome this , let us copy the source code into a text editor. You can change the var names to anything you want. Instead of trying to understand the logic of the IIFE function , just make some changes and print the array after the code has ran into the console. Remove the useless function and use array indices directly. Infact , remove even the string array and use the text directly. Finally after making the changes , here is the Final Code:
 
-![Screenshot 2024-06-30 112640](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/367b0dff-a9ae-43dc-8abb-94d54c61f416)
+```
+<html>
+<head>
+<title>Secure Login Portal V2.0</title>
+</head>
+<body background="barbed_wire.jpeg" >
+<!-- standard MD5 implementation -->
+<script type="text/javascript" src="md5.js"></script>
+
+<script type="text/javascript">
+
+var string_array = ['getElementById', 'value', 'substring', 'picoCTF{', 'not_this', '0a029}', '_again_5', 'this', 'Password Verified', 'Incorrect password'];
+
+
+var temp = function(v1, v2) {
+    var val = string_array[v1];
+    return val;
+};
+
+function verify() {
+    checkpass = document.getElementById('pass')[value];
+    if (checkpass[substring](0, 8) == 'picoCTF{') {
+        if (checkpass[substring](7, 9) == '{n') {
+            if (checkpass[substring](8, 16) == 'not_this') {
+                if (checkpass[substring](3, 6) == 'oCT') {
+                    if (checkpass[substring](24, 32) == '0a029}') {
+                        if (checkpass['substring'](6, 11) == 'F{not') {
+                            if (checkpass[substring](16, 24) == '_again_5') {
+                                if (checkpass[substring](13, 16) == 'this') {
+                                    alert('Password Verified');
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    } else {
+        alert('Incorrect Password');
+    }
+}
+
+</script>
+<div style="position:relative; padding:5px;top:50px; left:38%; width:350px; height:140px; background-color:gray">
+<div style="text-align:center">
+<p>New and Improved Login</p>
+
+<p>Enter valid credentials to proceed</p>
+<form action="index.html" method="post">
+<input type="password" id="pass" size="8" />
+<br/>
+<input type="submit" value="verify" onclick="verify(); return false;" />
+</form>
+</div>
+</div>
+</body>
+</html>
+
+```
+
+From the verify() function , you can reverse engineer the password. I am not writing it here because obviously that is the flag for this level!!
+
+## JS Kiddie 1
+
+
 
 
 
