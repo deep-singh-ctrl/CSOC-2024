@@ -444,8 +444,125 @@ function verify() {
 
 From the verify() function , you can reverse engineer the password. I am not writing it here because obviously that is the flag for this level!!
 
-## JS Kiddie 1
+## JS Kiddie 1 (In progress)
 
+First we click on the link are directed to the webpage with a text button and a submit button. Here is the HTML for the webpage. 
+
+```
+<html>
+	<head>    
+		<script src="jquery-3.3.1.min.js"></script>
+		<script>
+			var bytes = [];
+			$.get("bytes", function(resp) {
+				bytes = Array.from(resp.split(" "), x => Number(x));
+			});
+
+			function assemble_png(u_in){
+				var LEN = 16;
+				var key = "0000000000000000";
+				var shifter;
+				if(u_in.length == LEN){
+					key = u_in;
+				}
+				var result = [];
+				for(var i = 0; i < LEN; i++){
+					shifter = key.charCodeAt(i) - 48;
+					for(var j = 0; j < (bytes.length / LEN); j ++){
+						result[(j * LEN) + i] = bytes[(((j + shifter) * LEN) % bytes.length) + i]
+					}
+				}
+				while(result[result.length-1] == 0){
+					result = result.slice(0,result.length-1);
+				}
+				document.getElementById("Area").src = "data:image/png;base64," + btoa(String.fromCharCode.apply(null, new Uint8Array(result)));
+				return false;
+			}
+		</script>
+	</head>
+	<body>
+
+		<center>
+			<form action="#" onsubmit="assemble_png(document.getElementById('user_in').value)">
+				<input type="text" id="user_in">
+				<input type="submit" value="Submit">
+			</form>
+			<img id="Area" src=""/>
+		</center>
+
+	</body>
+</html>
+```
+
+Look at the top of the HTML page , the browser first sends a AJAX request through the get function of the jquery library. Open up the console for whatever browser you are using and head refresh the page. Make sure that your browser can intercept http and xml requests. Now we can see the bytes list from here. Here it is.
+
+![Screenshot 2024-06-30 161704](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/53dc0f5a-7d20-4c9d-ab70-36ff2c833064)
+
+Or if you want to copy it :
+```
+bytes = [156,255,80,255,117,10,239,248,152,253,120,232,36,127,116,255,151,235,25,172,215,0,56,102,219,174,30,15,36,188,93,90,249,36,32,45,123,73,191,151,236,241,151,68,144,250,157,130,1,180,20,85,213,2,157,248,68,255,250,13,60,66,249,82,187,157,29,222,29,30,0,252,126,251,95,0,174,72,194,108,29,101,70,21,121,40,26,132,73,119,254,237,73,192,96,219,137,80,89,71,0,145,1,152,0,69,254,71,0,65,68,35,0,0,119,114,13,222,68,119,1,0,78,40,155,111,95,90,164,0,26,2,0,245,186,0,84,0,0,233,145,46,110,49,48,16,78,223,135,64,197,10,0,120,0,243,252,62,144,188,21,61,1,110,148,208,22,114,160,31,156,17,45,59,72,237,74,218,0,8,32,123,136,65,179,150,32,56,206,43,240,9,156,225,69,54,226,158,106,148,62,48,1,232,173,0,239,248,243,206,82,255,241,252,56,55,152,132,108,181,78,254,175,251,60,183,38,231,63,123,204,48,43,13,131,4,113,75,243,215,32,200,144,195,29,233,196,63,3,190,139,207,89,28,107,159,185,101,59,120,121,12,245,116,64,96,250,187,241,234,231,207,213,239,119,191,233,71,205,127,144,40,251,253,173,186,246,10,227,252,202,242,163,74,237,33,75,49,205,74,154,165,126,231,30,231,232,199,118,65,211,98,204,7,250,244,141,155,243,123,82,137,252,35,183,201,132,91,252,37,244,56,188,86,125,103,216,248,215,146,144,149,21,164,233,219,127,127,207,208,30,154,111,203,63,127,141,231,146,5,20,4,81,239,38,36,19,191,63,61,183,223,215,205,210,239,168,135,148,201,39,248,212,191,160,151,116,19,150,99,249,141,111,188,0,225,193,61,73,140,160,56,23,53,48,5,99,100,175,250,125,151,253,12,150,85,41,72,206,97,52,79,88,196,130,26,157,254,185,181,42,146,217,255,24,125,155,88,111,116,167,62,238,36,52,95,57,54,126,233,184,143,46,183,234,73,183,108,163,228,218,233,129,44,169,191,74,0,30,126,245,10,249,245,241,65,191,245,73,209,50,140,26,72,132,223,181,204,200,123,185,186,183,218,175,228,249,75,180,91,229,252,193,203,187,253,52,166,28,117,119,13,238,134,74,227,127,71,251,237,50,191,61,76,230,90,241,178,221,233,202,254,211,228,156,60,202,241,71,49,24,90,187,3,245,247,159,124,157,250,227,18,150,50,49,101,86,235,162,234,57,124,108,116,245,226,190,28,43,129,220,86,245,85,107,38,215,223,119,242,72,140,213,103,209,194,70,30,96,111,204,128,234,55,184,247,205,49,227,5,220,101,80,171,155,217,87,33,26,173,127,187,128,253,215,111,203,54,210,243,29,237,148,204,235,202,131,191,191,211,157,54,147,104,188,87,4,251,25,17,185,219,247,124,135,228,176,223,135,196,157,130,215,206,124,122,136,248,28,23,175,56,104,209,253,47,161,236,61,252,147,140,86,102,185,82,110,231,91,251,245,216,243,254,236,176,127,134,31,135,152,251,90,0,216,127,102,56,99,56,64,204,61,95]
+```
+Next lets look at the function assemble_png. This function takes the user input as u_in. It then assigns this to the key if the length of input is 16. Next the decryption alogrithm is run and finally the result array is converted to a base64 URL for the image. 
+
+Here are the steps in detail :
+
+* *Decryption* : Run the algorithm for decryption. The key here is supposed to be a 16 element long string consisting of digits from 0 to 9 as is evident from the line where the shifter is set to the ascii of the element -48 which is the ascii of '0'
+
+* *Conversion to typed Array* : The result array of the last step is converted to an array where each of the entries is a bytes object
+
+* *Conversion to string* : Each element of the result array is converted to a character. Note that since the bytes array does not contain any element greater than 255 , all entries of this string will have a unicode (in decimal) less than equal to 255.
+
+* *Base64 encoding* :The string is then encoded into base64 before being sent to as png data.
+
+
+To get the flag , we need to reverse engineer all of this. We know that the first 8 bytes or the magic number of a png header are fixed. This means that we can possibly try to guess some values of the shifter in the loop and thus lower down our hit and trials for the key. 
+
+Some additional Useful programs : you can try to write a array searcher for the reverse engineering process, Here is simple implementation in C++
+
+```
+#include <bits/stdc++.h>
+using namespace std;
+
+main(){
+    int choice;
+    int finder;
+    vector<int> bytes = {156,255,80,255,117,10,239,248,152,253,120,232,36,127,116,255,151,235,25,172,215,0,56,102,219,174,30,15,36,188,93,90,249,36,32,45,123,73,191,151,236,241,151,68,144,250,157,130,1,180,20,85,213,2,157,248,68,255,250,13,60,66,249,82,187,157,29,222,29,30,0,252,126,251,95,0,174,72,194,108,29,101,70,21,121,40,26,132,73,119,254,237,73,192,96,219,137,80,89,71,0,145,1,152,0,69,254,71,0,65,68,35,0,0,119,114,13,222,68,119,1,0,78,40,155,111,95,90,164,0,26,2,0,245,186,0,84,0,0,233,145,46,110,49,48,16,78,223,135,64,197,10,0,120,0,243,252,62,144,188,21,61,1,110,148,208,22,114,160,31,156,17,45,59,72,237,74,218,0,8,32,123,136,65,179,150,32,56,206,43,240,9,156,225,69,54,226,158,106,148,62,48,1,232,173,0,239,248,243,206,82,255,241,252,56,55,152,132,108,181,78,254,175,251,60,183,38,231,63,123,204,48,43,13,131,4,113,75,243,215,32,200,144,195,29,233,196,63,3,190,139,207,89,28,107,159,185,101,59,120,121,12,245,116,64,96,250,187,241,234,231,207,213,239,119,191,233,71,205,127,144,40,251,253,173,186,246,10,227,252,202,242,163,74,237,33,75,49,205,74,154,165,126,231,30,231,232,199,118,65,211,98,204,7,250,244,141,155,243,123,82,137,252,35,183,201,132,91,252,37,244,56,188,86,125,103,216,248,215,146,144,149,21,164,233,219,127,127,207,208,30,154,111,203,63,127,141,231,146,5,20,4,81,239,38,36,19,191,63,61,183,223,215,205,210,239,168,135,148,201,39,248,212,191,160,151,116,19,150,99,249,141,111,188,0,225,193,61,73,140,160,56,23,53,48,5,99,100,175,250,125,151,253,12,150,85,41,72,206,97,52,79,88,196,130,26,157,254,185,181,42,146,217,255,24,125,155,88,111,116,167,62,238,36,52,95,57,54,126,233,184,143,46,183,234,73,183,108,163,228,218,233,129,44,169,191,74,0,30,126,245,10,249,245,241,65,191,245,73,209,50,140,26,72,132,223,181,204,200,123,185,186,183,218,175,228,249,75,180,91,229,252,193,203,187,253,52,166,28,117,119,13,238,134,74,227,127,71,251,237,50,191,61,76,230,90,241,178,221,233,202,254,211,228,156,60,202,241,71,49,24,90,187,3,245,247,159,124,157,250,227,18,150,50,49,101,86,235,162,234,57,124,108,116,245,226,190,28,43,129,220,86,245,85,107,38,215,223,119,242,72,140,213,103,209,194,70,30,96,111,204,128,234,55,184,247,205,49,227,5,220,101,80,171,155,217,87,33,26,173,127,187,128,253,215,111,203,54,210,243,29,237,148,204,235,202,131,191,191,211,157,54,147,104,188,87,4,251,25,17,185,219,247,124,135,228,176,223,135,196,157,130,215,206,124,122,136,248,28,23,175,56,104,209,253,47,161,236,61,252,147,140,86,102,185,82,110,231,91,251,245,216,243,254,236,176,127,134,31,135,152,251,90,0,216,127,102,56,99,56,64,204,61,95};
+    while(true){
+        cout << "Enter value to find \n";
+        cin >> finder;
+        if(finder == -1)
+            break;
+        auto it = find(bytes.begin(), bytes.end(), finder);
+
+
+        if (it != bytes.end()) {
+        cout << "Element found at index: " << distance(bytes.begin(), it) << endl;
+        } else {
+        cout << "Element not found." << endl;}
+    }
+
+}
+
+```
+
+We will need this a lot so pay attention to it : 
+
+Next we need to know the magic numbers for png header. Here they are , from wikipedia : 
+
+![Screenshot 2024-06-30 162953](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/aaa9ebf3-f61e-417d-8c8a-53107e6491cc)
+
+Just Convert these to decimals to work upon easily :
+
+```
+137 80 78 71 13 10 26 10
+
+```
+
+Now look at this code block of the JS : 
+
+![Screenshot 2024-06-30 163205](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/2934fa1e-42d5-47ea-9c66-bb5edcbb597a)
+
+See how the values of the result array are update? You can start with putting key to all 0s to get a feel of the algorithm. Remeber we need to set up our values in such a way that we have string of digits from 0 to 9 and the header that is result[0] , result[1] , etc match the header of the PNG file. 
 
 
 
