@@ -101,7 +101,7 @@ So for the username , since `|` is not filtered , we can use it and our username
 
 `SELECT username, password FROM users WHERE username='hello' AND password='asda'`
 
-We need to figure out some way to drop the remaining query after username or make the password paramter return true. Unfortuantely if you look at the filters above , most of our relational and logical operators have been banned. So let's use the list of all Logicaal Operators in SQLite and think of ways to bypass this. [Here is the list](https://www.javatpoint.com/sqlite-operators) , let's try those from which we can make possible queries (Obviously the filtered keyowrds have been ignored). Firstly i tried this query 
+We need to figure out some way to drop the remaining query after username or make the password paramter return true. Unfortuantely if you look at the filters above , most of our relational and logical operators have been banned. So let's use the list of all Logicaal Operators in SQLite and think of ways to bypass this. [Here is the list](https://www.javatpoint.com/sqlite-operators) , let's try those from which we can make possible queries (Obviously the filtered keyowrds have been ignored). 
 
 ## Web gauntlet 3
 
@@ -305,7 +305,88 @@ Next change up the language in the accept language header to ge the flag.
 
 ## Client-Side-Again
 
-As per the hint , let us inspect the JS page source and specifically the JS for the submit button. It seems to bea regular JS but it has been obfuscated and made difficult to reverse read and understand. The var names are hexes , the string names are referenced by the array indices. 
+As per the hint , let us inspect the JS page source and specifically the JS for the submit button. It seems to bea regular JS but it has been obfuscated and made difficult to reverse read and understand. The var names are hexes , the string names are referenced by the array indices and there are 2 pretty useless functions here. Here is the page orignal source. 
+
+```
+
+<html>
+<head>
+<title>Secure Login Portal V2.0</title>
+</head>
+<body background="barbed_wire.jpeg" >
+<!-- standard MD5 implementation -->
+<script type="text/javascript" src="md5.js"></script>
+
+<script type="text/javascript">
+	
+	var _0x5a46 = ['0a029}', '_again_5', 'this', 'Password\x20Verified', 'Incorrect\x20password', 'getElementById', 'value', 'substring', 'picoCTF{', 'not_this'];
+(function(_0x4bd822, _0x2bd6f7) {
+    var _0xb4bdb3 = function(_0x1d68f6) {
+        while (--_0x1d68f6) {
+            _0x4bd822['push'](_0x4bd822['shift']());
+        }
+    };
+    _0xb4bdb3(++_0x2bd6f7);
+}(_0x5a46, 0x1b3));
+var _0x4b5b = function(_0x2d8f05, _0x4b81bb) {
+    _0x2d8f05 = _0x2d8f05 - 0x0;
+    var _0x4d74cb = _0x5a46[_0x2d8f05];
+    return _0x4d74cb;
+};
+
+function verify() {
+    checkpass = document[_0x4b5b('0x0')]('pass')[_0x4b5b('0x1')];
+    split = 0x4;
+    if (checkpass[_0x4b5b('0x2')](0x0, split * 0x2) == _0x4b5b('0x3')) {
+        if (checkpass[_0x4b5b('0x2')](0x7, 0x9) == '{n') {
+            if (checkpass[_0x4b5b('0x2')](split * 0x2, split * 0x2 * 0x2) == _0x4b5b('0x4')) {
+                if (checkpass[_0x4b5b('0x2')](0x3, 0x6) == 'oCT') {
+                    if (checkpass[_0x4b5b('0x2')](split * 0x3 * 0x2, split * 0x4 * 0x2) == _0x4b5b('0x5')) {
+                        if (checkpass['substring'](0x6, 0xb) == 'F{not') {
+                            if (checkpass[_0x4b5b('0x2')](split * 0x2 * 0x2, split * 0x3 * 0x2) == _0x4b5b('0x6')) {
+                                if (checkpass[_0x4b5b('0x2')](0xc, 0x10) == _0x4b5b('0x7')) {
+                                    alert(_0x4b5b('0x8'));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    } else {
+        alert(_0x4b5b('0x9'));
+
+  </script>
+<div style="position:relative; padding:5px;top:50px; left:38%; width:350px; height:140px; background-color:gray">
+<div style="text-align:center">
+<p>New and Improved Login</p>
+
+<p>Enter valid credentials to proceed</p>
+<form action="index.html" method="post">
+<input type="password" id="pass" size="8" />
+<br/>
+<input type="submit" value="verify" onclick="verify(); return false;" />
+</form>
+</div>
+</div>
+</body>
+</html>
+```
+
+These are the Obfuscation Techniques used:
+
+* **VAR NAMES** : In JS , the var names can include digits but cannot begin with a digit. The programmer has used a `_` sign to circumvent this
+* **STRING ARRAY** : Instead of writing the text , the array indices are used.
+* **IIFE** : Changes the order of the String array before verify() function.
+* **USELESS FUNCTION** : A useless function is used to return the value of array indices , instead of referencing array indices directly.
+
+To overcome this , let us copy the source code into a text editor. You can change the var names to anything you want. Instead of trying to understand the logic of the IIFE function , just make some changes and print the array after the code has ran into the console. Remove the useless function and use array indices directly. Infact , remove even the string array and use the text directly. Finally after making the changes , here is the Final Code:
+
+![Screenshot 2024-06-30 112640](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/367b0dff-a9ae-43dc-8abb-94d54c61f416)
+
+
+
+
 
 
 
