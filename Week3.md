@@ -444,7 +444,7 @@ function verify() {
 
 From the verify() function , you can reverse engineer the password. I am not writing it here because obviously that is the flag for this level!!
 
-## JS Kiddie 1 (In progress)
+## JS Kiddie 1
 
 First we click on the link are directed to the webpage with a text button and a submit button. Here is the HTML for the webpage. 
 
@@ -560,8 +560,11 @@ Now look at this code block of the JS :
 
 ![Screenshot 2024-06-30 163205](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/2934fa1e-42d5-47ea-9c66-bb5edcbb597a)
 
-See how the values of the result array are update? You can start with putting key to all 0s to get a feel of the algorithm. Remeber we need to set up our values in such a way that we have string of digits from 0 to 9 and the header that is result[0] , result[1] , etc match the header of the PNG file. 
+See how the values of the result array are update? You can start with putting key to all 0s to get a feel of the algorithm. Remeber we need to set up our values in such a way that we have string of digits from 0 to 9 and the header that is result[0] , result[1] , etc match the header of the PNG file. If you see carefully the result indices from 0 to 16 are only update when the value of j is zero. That should give you a good way to start this out. Another thing you can do is to add a debug code to the JS for the oage source to print the values of i and j for each loop iteration. Here is what i did. :
 
+```
+
+```
 
 
 
