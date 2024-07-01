@@ -1,6 +1,17 @@
 # Editing a Save file
 
-This Project will most likely comprise of multiple game entries as I have trouble deciding which one to proceed with. For now I am going to go with Games released on Windows as it is easier to locate savefiles for such games.
+This Project will most likely comprise of multiple game entries as I have trouble deciding which one to proceed with. For now I am going to go with Games released on Windows as it is easier to locate savefiles for such games. 
+
+Edit : *...This edit was added after Week 3 when the Game1 was hacked and Game2 was hacked using the tool...* 
+
+I fail to find suitable games to hack over here. Here are the problems I have encountered so far :
+
+* **TOO EASY** : Save files are literally just a JSON or XML which you can edit in notepad. So it doesn't really pose a challenge.
+* **DONE ALREADY** : These save files are usually encoded into some base64 or other formats and they have already been edited by community memebers with detailed step by step guides online.
+* **CLOUD SAVES** : How will you edit save files when they are not even on your PC? Most modern games have a multiplayer element and thus employ cloud saves which uses advanced techniques to get around.
+*  **UMM WHATIS THAT?** : Binary + Random save location of bytes each time. Encrypted possibly. Makes it impossible to compare the hexdumps to figure out the requisite byte to edit.
+
+So I might go for older games. Possibly late and early 2010s as the current gaming scenario is very much against save file editing. Its not that the games can't be hacked. You can very easily use tools such as cheat engine or Sqular or scanmem (for linux). However there is nothing to analyse if you go down that route. So I will probably go for older games now. 
 
 ## Game 1 : Lethis : Path to progress
 
