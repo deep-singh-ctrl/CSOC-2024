@@ -171,34 +171,35 @@ int local_24;
   int local_20;
   int i;
   
-  string local_48 = "dec";                                 // with name local_48 and = 
-                                   //for obfuscation maybe , the local_25 object is destroyed
-  local_20 = -7;
+  string local_48 = "dec";                                 // with name local_48 and = "dec\0" 
+                                   //for obfuscation maybe , the local_25 object was destroyed. So omiited
+
   local_24 = local_48.length(); //length of the local_48 string which is 3
   lVar4 = local_70.length();    //length of the local_70 string which is a copy of param;
-  if (lVar4 == 7) {                                                                      //lvar4 == 7(length of local_48)
+  if (lVar4 == 7) {                                                                      //lvar4 == 7(length of local_70 aka the argument)
 
-    for (i = 0; i < local_24; i = i + 1) {                                      //for loop on length of some string
-      if (i == local_24 + -1) {                                               //if reached last index
+    for (i = 0; i < 3; i = i + 1) {                                      //for loop on length of some local_48
+      if (i == 2) {                                               //if reached last index
                     
-        local_68 += "k";
+        local_68 += "k";                                  //append "kcar"  before appending the charcter at i
         local_68 += "car";
-
-        
+  
       }
-      pcVar5 = local_48.charAt(i);
-      local_68 += pcVar5;                     //local_68 is now dekcarc;
+      pcVar5 = local_48.charAt(i);                  //isnt correct syntax , but you get the point , it will add first "d" then "e" ....
+    }
+
+ local_68 += pcVar5;                     //out of the loop , local_68 is now dekcarc;
       
     }
-    _Var1 = local_48.end(); //vec.end()
-    _Var2 = local_48.begin(); //vec.begin()
+    _Var1 = local_48.end(); 
+    _Var2 = local_48.begin(); 
     std::
-    reverse(_Var2,_Var1);
+    reverse(_Var2,_Var1);                //local_68 is now "cracked"
     
-    if(local_68 == param_1) // compare param_1 to local_68
+    if(local_68 == param_1) // compare local_70 to local_68
     bvar6 = true;    //if true
     if (bVar6) {
-      unaff_R12D = 1;     // some var =1
+      unaff_R12D = 1;     // function return value is 1 , otherwise its zero.
 ```
 
 You dont need to know the full code , so i have cut down on the variable declarations and the rest of the if logic. Also don't get confused by the sudden introduction of the local_70 variable , it is only a copy of the paramter we passed as value to the function. 
