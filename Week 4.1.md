@@ -208,6 +208,186 @@ Now the local_68 contains the string "dekcarc" which when reversed is "cracked".
 
 ![Screenshot 2024-07-06 124138](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/5d5ff722-a19d-4ced-93c8-f47bcc4ad4aa)
 
+## Chall_5
+
+For this challenge , again we need to crack the password. The chall_5 comes in a folder with the same name with these files packed in it :
+
+![Screenshot 2024-07-07 075414](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/de406b26-0a83-4132-83c6-bf9b8a9d5c2d)
+
+Note that the chall_5 file is a PE32 type which means that it won't run on Linux , hence we will be using the Windows OS to analyze the file. If the chall_5 file doesn't run..Change the extension to .exe and try again. Also don't worry about the `libgcc_s_seh-1.dll` , `libstdc++-6.dll` and `libwinpthread-1.dll`. These are just c++ modules. Just like before the .exe opens a command prompt terminal and asks for the password. On entering the wrong password , the terminal window closes abruptly. 
+
+To analyze the file further , load the contents of the folder in Ghidra. You should see something like this after the import is successful (just drag and drop for the import).
+
+![Screenshot 2024-07-07 075955](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/9fe17423-edf4-4365-95ee-88fd19001e3e)
+
+Let's first analyze the .exe.0 file. We see that it has only one function (entry). It is not that important to look into it further as the entry function mostly just sets up the terminal and other stuff for the execution (There's like only Push and Add statements). So Let's ignore that and head to .exe file. We firstly look into the main() of the program. Please pardon the monotone. I have tried to add comments wherever i could but the lack of color can make the code difficult to understand. If posible , you can copy this decompiled code into Visual Studio for a much better view :
+
+```
+// Main_chall_5_in_Ghidra
+
+int __cdecl main(int _Argc,char **_Argv,char **_Env)
+
+{
+  undefined8 uVar1;                            //these vars are probably global or static vars since they initialse before main
+  basic_ostream *pbVar2;
+  undefined8 local_a8;
+  undefined8 local_a0;
+  basic_string local_98 [8];        
+  basic_string user_input [8];   //since this stores length we can be sure the password length is <= 8
+  basic_string<> local_58 [40];
+  byte *local_30;
+  basic_string *local_28;
+  undefined local_19;                      //var declaration ends here
+  
+  __main();           //this main is compiler added , just makes sure that all vars are nicely initialised.
+  obfuscatePassword[abi:cxx11](local_58);     //call obfuscatePassword on local_58 , local_58 is now "0xJam3z" xor with 109
+  std::__cxx11::basic_string<>::basic_string();      //initialise user_input
+  std::operator<<((basic_ostream *)&_ZSt4cout,"Enter the password: ");     //prompt
+  std::operator>>((basic_istream *)__fu0__ZSt3cin,user_input);            // store user input in user_input 
+  std::__cxx11::basic_string<>::basic_string(local_98);                 //new string but the initial value is not clear from the assembly or decompiler
+  local_19 = 0x6d;                              // local_19 = 109
+  local_28 = local_98;          // local_28 is string pointer pointing to local_98 string
+  local_a0 = local_98.begin();  // a0 stores the beginnning of the local_98 string
+  local_a8 = local_98.end(); //a8 stores the end of the local_98 string
+  while( true ) {
+    uVar1 = __gnu_cxx::operator!=(&local_a0,&local_a8);           // uvar1 is true if a0 and a8 are not equal
+    if ((char)uVar1 == '\0') break;                          // uvar1 is true
+    local_30 = (byte *)__gnu_cxx::__normal_iterator<>::operator*((__normal_iterator<> *)&local_a0 ); //typecast to byte the character at a0
+    *local_30 = *local_30 ^ 0x6d;         // xor the character with 0x6d(109 in base10) and update its value in local_98
+    __gnu_cxx::__normal_iterator<>::operator++((__normal_iterator<> *)&local_a0); // a0++
+  }
+  uVar1 = std::operator==();  //if local_98 is equal to local_58 then uvar1 is true
+  if ((char)uVar1 == '\0') {
+    pbVar2 = std::operator<<((basic_ostream *)&_ZSt4cout,"Incorrect");
+    std::basic_ostream<>::operator<<((basic_ostream<> *)pbVar2,std::endl<>);
+  }
+  else {
+    pbVar2 = std::operator<<((basic_ostream *)&_ZSt4cout,"Correct");   //if uvar1 was true
+    std::basic_ostream<>::operator<<((basic_ostream<> *)pbVar2,std::endl<>);
+    system("calc");
+  }
+
+  return 0;
+}
+```
+
+
+The big question here is what value does local_98 initialise with before the execution starts? Its not immediately clear , I couldn't get it from the assembly either. However it becomes clearer that local_98 is just a copy of the user input (From IDA , here is the main once again)
+
+```
+int __fastcall main(int argc, const char **argv, const char **envp)
+{
+  __int64 v3; // rax
+  __int64 v4; // rax
+  __int64 v6; // [rsp+20h] [rbp-90h] BYREF
+  __int64 v7; // [rsp+28h] [rbp-88h] BYREF
+  char v8[32]; // [rsp+30h] [rbp-80h] BYREF
+  char v9[32]; // [rsp+50h] [rbp-60h] BYREF
+  char v10[40]; // [rsp+70h] [rbp-40h] BYREF
+  _BYTE *v11; // [rsp+98h] [rbp-18h]
+  char *v12; // [rsp+A0h] [rbp-10h]
+  char v13; // [rsp+AFh] [rbp-1h]
+
+  _main();
+  obfuscatePassword[abi:cxx11]((__int64)v10);
+  std::string::basic_string(v9);
+  std::operator<<<std::char_traits<char>>(refptr__ZSt4cout, "Enter the password: ");
+  std::operator>><char>(refptr__ZSt3cin, v9);
+  std::string::basic_string(v8, v9);
+  v13 = 109;
+  v12 = v8;
+  v7 = std::string::begin(v8);
+  v6 = std::string::end(v12);
+  while ( __gnu_cxx::operator!=<char *,std::string>((__int64)&v7, (__int64)&v6) )
+  {
+    v11 = (_BYTE *)__gnu_cxx::__normal_iterator<char *,std::string>::operator*((__int64)&v7);
+    *v11 ^= 109;
+    __gnu_cxx::__normal_iterator<char *,std::string>::operator++(&v7);
+  }
+  if ( std::operator==<char>((__int64)v8, (__int64)v10) )
+  {
+    v3 = std::operator<<<std::char_traits<char>>(refptr__ZSt4cout, "Correct");
+    std::ostream::operator<<(v3, refptr__ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_);
+    system("calc");
+  }
+  else
+  {
+    v4 = std::operator<<<std::char_traits<char>>(refptr__ZSt4cout, "Incorrect");
+    std::ostream::operator<<(v4, refptr__ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_);
+  }
+  std::string::~string(v8);
+  std::string::~string(v9);
+  std::string::~string(v10);
+  return 0;
+}
+```
+
+Its  lot clearer than using ghidra. I might use it more from now. Next the logic , here's a algorithm for what the main function does :
+
+
+1. Call Function obfusactePassword on local_58
+2. Take user input
+3. Copies user input into local_98
+4. Iterates over the length of local_98 using two iterators begin and end
+5. On each iteration , take the character from local_98 at begin , typecaste it into byte , xor it with 109 and update
+6. Increment the begin iterator
+7. Compare the strings local_58 and local_98
+8. Success if both are equal else fail
+
+Now lets take a look at the obfuscate function in Ghidra. It takes one parameter of string pointer type and returns a string pointer. Since the argument is a pointer
+The maniupalations reflect in the argument.
+
+```
+basic_string<> * obfuscatePassword[abi:cxx11](basic_string<> *param_1)  //takes string argument
+
+{
+  undefined8 uVar1;
+  undefined8 local_50;
+  undefined8 local_48;
+  allocator local_39;
+  allocator *local_38;
+  byte *local_30;
+  basic_string<> *local_28;
+  undefined local_19;
+  
+  local_38 = &local_39;  //local_38 is pointer to local_39
+  std::__cxx11::basic_string<>::basic_string<>(param_1,"0xJam3z",&local_39);  //initialise local_39 to "0xJam3z"
+  std::__new_allocator<char>::~__new_allocator();
+  local_19 = 0x6d;               //local_19 is 109
+  local_28 = param_1;                
+  local_48 = std::__cxx11::basic_string<>::begin();
+  local_50 = std::__cxx11::basic_string<>::end();
+  while( true ) {
+    uVar1 = __gnu_cxx::operator!=(&local_48,&local_50);   //iterate over the length of parameter
+    if ((char)uVar1 == '\0') break;
+    local_30 = (byte *)__gnu_cxx::__normal_iterator<>::operator*((__normal_iterator<> *)&local_48 );
+    *local_30 = *local_30 ^ 0x6d;         //xor with 109 and update value
+    __gnu_cxx::__normal_iterator<>::operator++((__normal_iterator<> *)&local_48);
+  }
+  return param_1;
+}
+```
+
+A breakdown :
+
+1. Intialise param_1 to "0xJam3z" using local_39 as allocator
+2. Set local_19 to 109
+3. Again iterate over the length of param_1 and xor with local_19(109)
+4. Update the values and increment the loop variable
+5. Return the update param_1
+
+After the full execution of obfuscatePassword and the main just before the final if condition , the local_58 var stores "0xJam3z" xor with 109. to make local_98 equal to local_58 up till this step , we simply pass it as the password (since the key used for xoring is the same in both cases aka 109). Now let us check this theory :
+
+
+![Screenshot 2024-07-07 093558](https://github.com/deep-singh-ctrl/CSOC-2024/assets/172205598/c7cf20d4-23bf-4e04-bd10-5d169c4cb674)
+
+This along with an open calculator. 
+
+
+
+
+
+
 
 
 
